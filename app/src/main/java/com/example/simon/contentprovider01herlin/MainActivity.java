@@ -1,14 +1,17 @@
 package com.example.simon.contentprovider01herlin;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,20 +19,32 @@ import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int CODE = 123;
+    public static final int CREATE_CONTACT = 1;
 
     private EditText searchEditText;
     private ListView listView;
     private LinearLayout linearLayout;
+    private Button create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_CONTACTS},1);
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.contactsList);
         searchEditText = (EditText) findViewById(R.id.searchContactEditText);
         linearLayout = (LinearLayout) findViewById(R.id.addContactLayout);
+        create = (Button) findViewById(R.id.create);
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateActivity.class);
+                intent.putExtra("name", searchEditText.getText().toString());
+                startActivityForResult(intent, CREATE_CONTACT);
+            }
+        });
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,10 +97,5 @@ public class MainActivity extends AppCompatActivity {
         displayContacts("");
     }
 
-    public void createContact(View v) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
-        intent.putExtra(ContactsContract.Intents.Insert.NAME, searchEditText.getText().toString());
-        startActivityForResult(intent, CODE);
-    }
 }
 

@@ -3,4 +3,9 @@
     <string name="searchContactHint">Chercher un contact</string>
     <string name="contactNotFound">Contact non trouvé</string>
     <string name="createContact">Créer le contact</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="valid">Valider</string>
+    <string name="name">Nom</string>
+    <string name="phone">Numéro de téléphone</string>
+    <string name="cancel">Annuler</string>
 </resources>

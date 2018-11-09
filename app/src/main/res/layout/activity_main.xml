@@ -36,9 +36,9 @@
             android:text="@string/contactNotFound" />
 
         <Button
+            android:id="@+id/create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="createContact"
             android:text="@string/createContact" />
 
     </LinearLayout>
